@@ -91,3 +91,15 @@ def convert_to_conll(input_corpus_file, output_conll_file, corenlp_url):
                     output_file.write(line_str)
 
                 output_file.write("\n")
+
+
+def remove_label(input_tab_file, output_tab_file):
+
+    with open(os.path.abspath(input_tab_file), "r", encoding="UTF-8") as input_file:
+        with open(os.path.abspath(output_tab_file), "w", encoding="utf-8") as output_file:
+            for line in input_file:
+                if re.match("^$", line):
+                    output_file.write(line)
+                else:
+                    parts = line.rstrip("\n").split("\t")
+                    output_file.write("{}\t{}\n".format(parts[0], parts[1]))
