@@ -2,7 +2,7 @@ import argparse
 import logging
 import os
 
-from w01pkg.conll import convert_to_conll, remove_label
+from .w01pkg.conll import convert_to_conll, remove_label
 
 if __name__ == "__main__":
 
