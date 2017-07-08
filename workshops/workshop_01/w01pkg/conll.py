@@ -129,44 +129,180 @@ def eval_output(system_tab_file, gs_tab_file):
             parts = line.rstrip("\n").split('\t')
             gs_annotations.append((parts[0], parts[-1]))
 
-    gs_types = dict()
+    gs_types = {
+        "entities": dict(),
+        "labels": dict()
+    }
+
     for _, label in gs_annotations:
-        if label not in gs_types:
-            gs_types[label] = defaultdict(int)
+        if label not in gs_types["labels"]:
+            gs_types["labels"][label] = defaultdict(int)
 
     for _, label in system_annotations:
-        if label not in gs_types:
+        if label not in gs_types["labels"]:
             raise Exception("A predicted label seems incorrect: {}".format(label))
 
-    gs_types["all"] = defaultdict(int)
+    gs_types["labels"]["all"] = defaultdict(int)
+
+    gs_types["entities"] = dict()
+    gs_types["entities"]["all"] = defaultdict(int)
 
     for (_, label_sys), (_, label_gs) in zip(system_annotations, gs_annotations):
 
-        gs_types[label_sys]["pred"] += 1
-        gs_types[label_gs]["ref"] += 1
+        gs_types["labels"][label_sys]["pred"] += 1
+        gs_types["labels"][label_gs]["ref"] += 1
 
-        gs_types["all"]["pred"] += 1
-        gs_types["all"]["ref"] += 1
+        gs_types["labels"]["all"]["pred"] += 1
+        gs_types["labels"]["all"]["ref"] += 1
 
         if label_gs == label_sys:
-            gs_types[label_gs]["corr"] += 1
-            gs_types["all"]["corr"] += 1
+            gs_types["labels"][label_gs]["corr"] += 1
+            gs_types["labels"]["all"]["corr"] += 1
 
-    final_scores = dict()
+    sys_entities = get_entities(system_annotations)
+    gs_entities = get_entities(gs_annotations)
 
-    for label, scores in gs_types.items():
+    for ent_idx, ent_str in sys_entities.items():
+
+        ent_type = ent_idx[-1]
+        if ent_type not in gs_types["entities"]:
+            gs_types["entities"][ent_type] = defaultdict(int)
+
+        gs_types["entities"][ent_type]["pred"] += 1
+        gs_types["entities"]["all"]["pred"] += 1
+
+        if ent_idx in gs_entities:
+            gs_types["entities"][ent_type]["corr"] += 1
+            gs_types["entities"]["all"]["corr"] += 1
+
+    for ent_idx, ent_str in gs_entities.items():
+        ent_type = ent_idx[-1]
+        gs_types["entities"][ent_type]["ref"] += 1
+        gs_types["entities"]["all"]["ref"] += 1
+
+    final_scores = {
+        "labels": dict(),
+        "entities": dict()
+    }
+
+    for label, scores in gs_types["labels"].items():
 
         precision = scores["corr"]/scores["pred"]
         recall = scores["corr"]/scores["ref"]
         f1_measure = (2 * precision * recall) / (precision + recall)
 
-        final_scores[label] = {
+        final_scores["labels"][label] = {
             "precision": precision,
             "recall": recall,
             "f1_measure": f1_measure
         }
 
         for k, v in scores.items():
-            final_scores[label][k] = v
+            final_scores["labels"][label][k] = v
+
+    for label, scores in gs_types["entities"].items():
+
+        precision = scores["corr"]/scores["pred"]
+        recall = scores["corr"]/scores["ref"]
+        f1_measure = (2 * precision * recall) / (precision + recall)
+
+        final_scores["entities"][label] = {
+            "precision": precision,
+            "recall": recall,
+            "f1_measure": f1_measure
+        }
+
+        for k, v in scores.items():
+            final_scores["entities"][label][k] = v
 
     return final_scores
+
+
+def get_entities(annotations):
+
+    entities = dict()
+
+    previous_tag = "O"
+    previous_cat = ""
+
+    current_entity_id = list()
+    current_entity_str = list()
+    current_entity_cat = ""
+
+    for i, (tok, label) in enumerate(annotations):
+
+        if label.startswith("I"):
+
+            current_cat = label.split("-")[1]
+
+            if previous_tag == "O":
+
+                current_entity_id.append(i)
+                current_entity_str.append(tok)
+                current_entity_cat = current_cat
+
+                previous_tag = "I"
+                previous_cat = current_cat
+
+            else:
+                if previous_cat != current_cat:
+
+                    entities[tuple(current_entity_id)+tuple([current_entity_cat])] = " ".join(current_entity_str)
+
+                    current_entity_id.clear()
+                    current_entity_str.clear()
+                    current_entity_cat = ""
+
+                current_entity_id.append(i)
+                current_entity_str.append(tok)
+                current_entity_cat = current_cat
+
+        elif label.startswith("B"):
+
+            current_cat = label.split("-")[1]
+
+            if previous_tag in ["B", "I"]:
+
+                entities[tuple(current_entity_id) + tuple([current_entity_cat])] = " ".join(current_entity_str)
+
+                current_entity_id.clear()
+                current_entity_str.clear()
+                current_entity_cat = ""
+
+                current_entity_id.append(i)
+                current_entity_str.append(tok)
+                current_entity_cat = current_cat
+
+                previous_tag = "B"
+                previous_cat = current_cat
+
+            else:
+
+                current_entity_id.append(i)
+                current_entity_str.append(tok)
+                current_entity_cat = current_cat
+
+                previous_tag = "B"
+                previous_cat = current_cat
+
+        elif label.startswith("O"):
+
+            if previous_tag in ["B", "I"]:
+
+                entities[tuple(current_entity_id) + tuple([current_entity_cat])] = " ".join(current_entity_str)
+
+                current_entity_id.clear()
+                current_entity_str.clear()
+                current_entity_cat = ""
+
+                previous_tag = "O"
+                previous_cat = ""
+
+    if len(current_entity_id) > 0:
+        entities[tuple(current_entity_id) + tuple([current_entity_cat])] = " ".join(current_entity_str)
+
+        current_entity_id.clear()
+        current_entity_str.clear()
+        current_entity_cat = ""
+
+    return entities
