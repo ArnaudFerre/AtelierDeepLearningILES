@@ -1,5 +1,6 @@
 import os
 import re
+from collections import defaultdict
 
 import requests
 
@@ -103,3 +104,69 @@ def remove_label(input_tab_file, output_tab_file):
                 else:
                     parts = line.rstrip("\n").split("\t")
                     output_file.write("{}\t{}\n".format(parts[0], parts[1]))
+
+
+def eval_output(system_tab_file, gs_tab_file):
+
+    system_annotations = list()
+    gs_annotations = list()
+
+    with open(os.path.abspath(system_tab_file), "r", encoding="UTF-8") as sys_file:
+        for line in sys_file:
+
+            if re.match("^$", line):
+                continue
+
+            parts = line.rstrip("\n").split('\t')
+            system_annotations.append((parts[0], parts[-1]))
+
+    with open(os.path.abspath(gs_tab_file), "r", encoding="UTF-8") as gs_file:
+        for line in gs_file:
+
+            if re.match("^$", line):
+                continue
+
+            parts = line.rstrip("\n").split('\t')
+            gs_annotations.append((parts[0], parts[-1]))
+
+    gs_types = dict()
+    for _, label in gs_annotations:
+        if label not in gs_types:
+            gs_types[label] = defaultdict(int)
+
+    for _, label in system_annotations:
+        if label not in gs_types:
+            raise Exception("A predicted label seems incorrect: {}".format(label))
+
+    gs_types["all"] = defaultdict(int)
+
+    for (_, label_sys), (_, label_gs) in zip(system_annotations, gs_annotations):
+
+        gs_types[label_sys]["pred"] += 1
+        gs_types[label_gs]["ref"] += 1
+
+        gs_types["all"]["pred"] += 1
+        gs_types["all"]["ref"] += 1
+
+        if label_gs == label_sys:
+            gs_types[label_gs]["corr"] += 1
+            gs_types["all"]["corr"] += 1
+
+    final_scores = dict()
+
+    for label, scores in gs_types.items():
+
+        precision = scores["corr"]/scores["pred"]
+        recall = scores["corr"]/scores["ref"]
+        f1_measure = (2 * precision * recall) / (precision + recall)
+
+        final_scores[label] = {
+            "precision": precision,
+            "recall": recall,
+            "f1_measure": f1_measure
+        }
+
+        for k, v in scores.items():
+            final_scores[label][k] = v
+
+    return final_scores
