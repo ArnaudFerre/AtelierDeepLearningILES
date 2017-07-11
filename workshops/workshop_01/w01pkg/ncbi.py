@@ -1,9 +1,7 @@
-import logging
 import os
 import re
 
 import gensim
-from keras.utils import to_categorical
 
 ncbi_mapping = ["B-Disease", "I-Disease", "O"]
 
@@ -54,7 +52,6 @@ def _load_dataset(data_file, word_dict, word_set):
             else:
                 current_sequence.append(word_dict["#unk#"])
 
-            # current_labels.append(to_categorical(ncbi_mapping.index(parts[-1]), num_classes=3))
             current_labels.append(ncbi_mapping.index(parts[-1]))
 
     if len(current_sequence) > 0:
