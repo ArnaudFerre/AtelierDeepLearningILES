@@ -28,3 +28,21 @@ Three approach are possible, from the simplest to the most meaningful:
 1. training single word embeddings + training and testing a neural net for single word classification
 2. training single word embeggings + training and testing a neural net (CNN) for contextual word classification
 3. training multiword embeddings + training and testing on variable length multiword expressions (with a heuristic for deciding length)
+
+## Helpers
+
+We provide a function to load the NCBI corpus.
+```python
+from w01pkg.ncbi import load_ncbi
+
+gensim_model_path = "/path/to/gensim-model.pkl"
+
+train_tab_data = "/path/to/data/ncbi-disease-corpus/tab-data/train.tab"
+dev_tab_data = "/path/to/data/ncbi-disease-corpus/tab-data/dev.tab"
+test_tab_data = "/path/to/data/ncbi-disease-corpus/tab-data/test.tab"
+
+(x_train, y_train), (x_dev, y_dev), (x_test, y_test) = load_ncbi(train_tab_data,
+                                                                 dev_tab_data,
+                                                                 test_tab_data,
+                                                                 gensim_model_path)
+```
