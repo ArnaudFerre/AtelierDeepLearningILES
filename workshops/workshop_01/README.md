@@ -31,7 +31,8 @@ Three approach are possible, from the simplest to the most meaningful:
 
 ## Helpers
 
-We provide a function to load the NCBI corpus.
+We provide a function to load the NCBI corpus. The function will use the gensim model given as argument to map tokens to
+indexes in the gensim model. If the token is not present in the gensim model, it will map it to the `#unk#` token.
 ```python
 from w01pkg.ncbi import load_ncbi
 
