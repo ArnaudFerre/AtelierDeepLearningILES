@@ -73,7 +73,8 @@ vector_size = gensim_model.vector_size
 embedding_matrix = gensim_model.wv.syn0
 
 # Fast token looking-up in large gensim models
-# The operation `x in s` is O(n) for the `list` object and O(1) for the `set` object  so let build a set for token looking-up
+# The operation `x in s` is O(n) for the `list` object and O(1) for the `set` object 
+# Let's build a set for token looking-up
 word_set = set(gensim_model.wv.index2word)
 
 # Storing tokens indexes into a dictionary
