@@ -2,7 +2,7 @@ import re
 import os
 
 
-def _load_dataset(data_file, word_dict, word_set, mapping):
+def load_dataset(data_file, word_dict, word_set, mapping):
 
     x_data = list()
     y_data = list()
