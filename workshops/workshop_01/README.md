@@ -2,6 +2,15 @@
 
 For this first DL workshop, we propose to work on a Named Entity Recognition task.
 
+## Requirements
+
+* You need to have a working [Python](https://www.python.org/) environment. You can either follow the instructions
+located in the `tools` directory at the root of the repository for a system-wide installation, or follow the 
+[instructions](https://github.com/ArnaudFerre/AtelierDeepLearningILES/wiki) in the wiki for a local installation via
+miniconda.
+
+## Data
+
 Two corpora will be considered for the task:
 * The [NCBI Disease Corpus ](https://www.ncbi.nlm.nih.gov/CBBresearch/Dogan/DISEASE/), a corpus of PubMed abstracts
  annotated with disease mentions and concepts.
@@ -14,7 +23,6 @@ abstracts have been segmented, tokenized and tagged with parts of speech using
 (B-Disease, I-Disease, O).
 
 The JNLPBA is already in the correct format, so no preprocessing has been done.
-
 
 Three approach are possible, from the simplest to the most meaningful:
 1. training single word embeddings + training and testing a neural net for single word classification
