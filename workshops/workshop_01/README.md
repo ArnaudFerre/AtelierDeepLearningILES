@@ -35,10 +35,14 @@ We provide a function to load the NCBI corpus. The function will use the gensim 
 indexes in the gensim model. If the token is not present in the gensim model, it will map it to the `#unk#` token.
 
 For starters, two w2v models are available. You can also train yours or use randomly initialized vectors. 
-Do not forget to have a `#unk#` token if you want to use the tool 
+Do not forget to have a `#unk#` token if you want to use the tool. 
 
-* [s0100-w01-m128-lTrue-cTrue-i10_unk0.5.tar.gz](https://perso.limsi.fr/tourille/w2v/s0100-w01-m128-lTrue-cTrue-i10_unk0.5.tar.gz)
-* [s0200-w08-m64-lTrue-cTrue-i10_unk0.5.tar.gz](https://perso.limsi.fr/tourille/w2v/s0200-w08-m64-lTrue-cTrue-i10_unk0.5.tar.gz)
+* [s0100-w01-m128-lTrue-cTrue-i10_unk0.5.tar.gz](https://perso.limsi.fr/tourille/w2v/s0100-w01-m128-lTrue-cTrue-i10_unk0.5.tar.gz) -
+ Vector size: 100 | Window: 1 | Min-count: 128
+* [s0200-w08-m64-lTrue-cTrue-i10_unk0.5.tar.gz](https://perso.limsi.fr/tourille/w2v/s0200-w08-m64-lTrue-cTrue-i10_unk0.5.tar.gz) - 
+ Vector size: 200 | Window: 8 | Min-count: 64
+ 
+Both models were trained on *lowercased text* with numbers replaced with *0*.
 
 ```python
 from w01pkg.ncbi import load_ncbi
