@@ -26,7 +26,7 @@ The JNLPBA is already in the correct format, so no preprocessing has been done.
 
 Three approach are possible, from the simplest to the most meaningful:
 1. training single word embeddings + training and testing a neural net for single word classification
-2. training single word embeggings + training and testing a neural net (CNN) for contextual word classification
+2. training single word embeddings + training and testing a neural net (CNN) for contextual word classification
 3. training multiword embeddings + training and testing on variable length multiword expressions (with a heuristic for deciding length)
 
 ## Helpers
