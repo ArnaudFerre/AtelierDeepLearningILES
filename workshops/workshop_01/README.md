@@ -54,3 +54,37 @@ test_tab_data = "/path/to/data/ncbi-disease-corpus/tab-data/test.tab"
                                                                  test_tab_data,
                                                                  gensim_model_path)
 ```
+
+## Tips & Tricks
+
+### Gensim
+
+```python
+# Load a gensim model
+gensim_model = gensim.models.Word2Vec.load(gensim_model_path)
+
+# Get vocabulary size
+voc_size = len(gensim_model.wv.index2word)
+
+# Get vector size
+vector_size = gensim_model.vector_size
+
+# Retrieve raw matrix (voc_size x vector_size)
+embedding_matrix = gensim_model.wv.syn0
+
+# Fast token looking-up in large gensim models
+# The operation `x in s` is O(n) for the `list` object and O(1) for the `set` object  so let build a set for token looking-up
+word_set = set(gensim_model.wv.index2word)
+
+# Storing tokens indexes into a dictionary
+word_dict = {}
+for i, key in enumerate(gensim_model.wv.index2word):
+    word_dict[key] = i
+    
+# Now, if you want to fetch the id of a word, you look in the set to know if the token is in the vocabulary
+# If it is the case, you fetch its id in the dictionary
+if 'frite' in word_set:
+    token_id = word_dict["frite"]
+else:
+    token_id = word_dict["#unk#"]
+```
