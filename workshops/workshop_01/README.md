@@ -31,7 +31,7 @@ Three approach are possible, from the simplest to the most meaningful:
 
 ## Helpers
 
-We provide a function to load the NCBI corpus. The function will use the gensim model given as argument to map tokens to
+We provide two functions to load the corpora. The functions will use the gensim model given as argument to map tokens to
 indexes in the gensim model. If the token is not present in the gensim model, it will map it to the `#unk#` token.
 
 For starters, two w2v models are available. You can also train yours or use randomly initialized vectors. 
@@ -46,17 +46,25 @@ Both models were trained on *lowercased text* with numbers replaced with *0*.
 
 ```python
 from w01pkg.ncbi import load_ncbi
+from w01pkg.jnlpba import load_jnlpba
 
 gensim_model_path = "/path/to/gensim-model.pkl"
 
-train_tab_data = "/path/to/data/ncbi-disease-corpus/tab-data/train.tab"
-dev_tab_data = "/path/to/data/ncbi-disease-corpus/tab-data/dev.tab"
-test_tab_data = "/path/to/data/ncbi-disease-corpus/tab-data/test.tab"
+ncbi_train_tab_data = "/path/to/data/ncbi-disease-corpus/tab-data/train.tab"
+ncbi_dev_tab_data = "/path/to/data/ncbi-disease-corpus/tab-data/dev.tab"
+ncbi_test_tab_data = "/path/to/data/ncbi-disease-corpus/tab-data/test.tab"
 
-(x_train, y_train), (x_dev, y_dev), (x_test, y_test) = load_ncbi(train_tab_data,
-                                                                 dev_tab_data,
-                                                                 test_tab_data,
-                                                                 gensim_model_path)
+(ncbi_x_train, ncbi_y_train), (ncbi_x_dev, ncbi_y_dev), (ncbi_x_test, ncbi_y_test) = load_ncbi(ncbi_train_tab_data,
+                                                                                               ncbi_dev_tab_data,
+                                                                                               ncbi_test_tab_data,
+                                                                                               gensim_model_path)
+
+jnlpba_train_tab_data = "/path/to/data/jnlpba-corpus/original-data/train/Genia4ERtask1.iob2"
+jnlpba_test_tab_data = "/path/to/data/jnlpba-corpus/original-data/test/Genia4EReval1.iob2"
+
+(jnlpba_x_train, jnlpba_y_train), (jnlpba_x_test, jnlpba_y_test) = load_jnlpba(jnlpba_train_tab_data,
+                                                                               jnlpba_test_tab_data,
+                                                                               gensim_model_path)
 ```
 
 ## Tips & Tricks
