@@ -33,6 +33,13 @@ Three approach are possible, from the simplest to the most meaningful:
 
 We provide a function to load the NCBI corpus. The function will use the gensim model given as argument to map tokens to
 indexes in the gensim model. If the token is not present in the gensim model, it will map it to the `#unk#` token.
+
+For starters, two w2v models are available. You can also train yours or use randomly initialized vectors. 
+Do not forget to have a `#unk#` token if you want to use the tool 
+
+* [s0100-w01-m128-lTrue-cTrue-i10_unk0.5.tar.gz](https://perso.limsi.fr/tourille/w2v/s0100-w01-m128-lTrue-cTrue-i10_unk0.5.tar.gz)
+* [s0200-w08-m64-lTrue-cTrue-i10_unk0.5.tar.gz](https://perso.limsi.fr/tourille/w2v/s0200-w08-m64-lTrue-cTrue-i10_unk0.5.tar.gz)
+
 ```python
 from w01pkg.ncbi import load_ncbi
 
