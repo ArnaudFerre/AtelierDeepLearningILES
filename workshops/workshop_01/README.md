@@ -54,10 +54,11 @@ ncbi_train_tab_data = "/path/to/data/ncbi-disease-corpus/tab-data/train.tab"
 ncbi_dev_tab_data = "/path/to/data/ncbi-disease-corpus/tab-data/dev.tab"
 ncbi_test_tab_data = "/path/to/data/ncbi-disease-corpus/tab-data/test.tab"
 
-(ncbi_x_train, ncbi_y_train), (ncbi_x_dev, ncbi_y_dev), (ncbi_x_test, ncbi_y_test) = load_ncbi(ncbi_train_tab_data,
-                                                                                               ncbi_dev_tab_data,
-                                                                                               ncbi_test_tab_data,
-                                                                                               gensim_model_path)
+(ncbi_x_train, ncbi_y_train), (ncbi_x_dev, ncbi_y_dev), \
+(ncbi_x_test, ncbi_y_test) = load_ncbi(ncbi_train_tab_data,
+                                       ncbi_dev_tab_data,
+                                       ncbi_test_tab_data,
+                                       gensim_model_path)
 
 jnlpba_train_tab_data = "/path/to/data/jnlpba-corpus/original-data/train/Genia4ERtask1.iob2"
 jnlpba_test_tab_data = "/path/to/data/jnlpba-corpus/original-data/test/Genia4EReval1.iob2"
