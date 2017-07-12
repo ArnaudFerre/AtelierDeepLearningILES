@@ -74,7 +74,7 @@ def getNearearWords(w, d_w2vData, threshold = 0.9):
 #######################################################################################################
 if __name__ == '__main__':
 
-    pathFile = "word2vecData_embeddings.json"
+    pathFile = "word2vecData_embeddings_dim100.txt"
     d_w2vData = loadEmbeddings(pathFile)
 
     getCosSimilarityBetweenWords("substance", "dna", d_w2vData)
