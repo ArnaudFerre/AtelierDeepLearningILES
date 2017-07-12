@@ -10,6 +10,7 @@ cd fchollet-keras-f120a56/
 
 sudo python3 ./setup.py install
 
+mkdir -p ~/.keras
 cat > ~/.keras/keras.json << EOF
 {
     "image_data_format": "channels_last",
@@ -17,3 +18,4 @@ cat > ~/.keras/keras.json << EOF
     "floatx": "float32",
     "backend": "theano"
 }
+EOF
