@@ -151,6 +151,6 @@ if __name__ == '__main__':
 
 
     #Prediction
-    classes = network.
+#    classes = network.
 
 
