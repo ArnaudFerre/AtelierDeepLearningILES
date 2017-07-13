@@ -34,5 +34,5 @@ Remarques :
 - Il y a quelques données mal fromatées dans les batch train/test...
 
 
-![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![alt text](https://github.com/ArnaudFerre/AtelierDeepLearningILES/blob/master/workshops/workshop_01/Task_01/pictures/DL01.png)
 
