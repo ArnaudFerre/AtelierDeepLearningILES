@@ -33,3 +33,6 @@ On pourra simplement utiliser en sortie une seule valeur : 1 si c'est une maladi
 Remarques :
 - Il y a quelques données mal fromatées dans les batch train/test...
 
+
+![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+
