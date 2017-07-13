@@ -1,13 +1,22 @@
 # Atelier « Deep Learning » 01 :
 
+Objectif de l'atelier :
+Savoir utiliser les fonctionnalités de base de la librairie Python Keras.
+La tâche est une tâche de reconnaissance d'entités nommées dans un corpus.
+
+Prérequis :
+- Maîtriser le langage Python
+- Avoir pu installer Keras (avec backend Theanos) -> une machine virtuelle VirtualBox avec l'installation circule 
+
 Description des fichiers :
+- ScriptsTest.py : script contenant plusieurs fonctions utilitaires ainsi qu'un exemple d'utilisation fonctionnelle de Keras
 - test.txt : Contient environ 23 000 tokens labélisés (fichier à n'utiliser que pour l'évaluation) 
 - test_withoutLabels.txt : Contient environ 23 000 tokens à labeliser (fichier à utiliser pour la prédiction)
 - train.txt : Contient environ 130 000 tokens labelisés (fichier à utiliser pour l'entraînement) 
 - word2vecData_embeddings_dim100.txt : Contient les vecteurs associés à chaque mots des corpus train+test (dimension 100).
 - word2vecData_embeddings_dim200.txt : Contient les vecteurs associés à chaque mots des corpus train+test (dimension 200).
-Remarque : Ne contient pas de mots-outils, ni de caractères. Vous pouvez donc trouver dans les train/test des token sans équivalent dans ce fichier.
-(- word2vecData_embeddings_dim200.gensim : Contient l'objet "model" tel que Gensimn le structure)
+Remarque : Ne contient pas de mots-outils, ni de caractères. Vous pouvez donc trouver dans les train/test des tokens sans équivalent dans ce fichier.
+(- word2vecData_embeddings_dim200.gensim : Contient l'objet "model" tel que Gensimn le structure - à n'utiliser que si vous savez utiliser Gensim)
 
 Formats :
 1) Pour test.txt : Un token par ligne
