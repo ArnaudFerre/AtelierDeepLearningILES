@@ -33,6 +33,14 @@ On pourra simplement utiliser en sortie une seule valeur : 1 si c'est une maladi
 Remarques :
 - Il y a quelques données mal fromatées dans les batch train/test...
 
-
+"Corrections" de l'atelier :
+Le script Python de ce répertoire montre un exemple complet de programme pour répondre à la tâche en utilisant la librairie Keras. Je pense que le réseau implémenté est celui-ci :
 ![alt text](https://github.com/ArnaudFerre/AtelierDeepLearningILES/blob/master/workshops/workshop_01/Task_01/pictures/DL01.png)
 
+Néanmoins, je n'en suis pas si sûr, et ça pourrait peut-être être un de ceux-ci :
+![alt text](https://github.com/ArnaudFerre/AtelierDeepLearningILES/blob/master/workshops/workshop_01/Task_01/pictures/DL02.png)
+
+Si vous exécutez ce script sans changer ses paramètres, vous devriez avoir des résultats autour de ceux-là (les résultats sont variables !) :
+- précision : 0.74 (j'ai pu monter à 0.78 parfois)
+- rappel : 0.35
+- F-mesure : 0.48
