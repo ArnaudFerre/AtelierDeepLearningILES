@@ -15,7 +15,9 @@ Description des fichiers :
 - train.txt : Contient environ 130 000 tokens labelisés (fichier à utiliser pour l'entraînement) 
 - word2vecData_embeddings_dim100.txt : Contient les vecteurs associés à chaque mots des corpus train+test (dimension 100).
 - word2vecData_embeddings_dim200.txt : Contient les vecteurs associés à chaque mots des corpus train+test (dimension 200).
+
 Remarque : Ne contient pas de mots-outils, ni de caractères. Vous pouvez donc trouver dans les train/test des tokens sans équivalent dans ce fichier.
+
 (- word2vecData_embeddings_dim200.gensim : Contient l'objet "model" tel que Gensimn le structure - à n'utiliser que si vous savez utiliser Gensim)
 
 Formats :
@@ -34,6 +36,7 @@ Remarques :
 - Il y a quelques données mal fromatées dans les batch train/test...
 
 "Corrections" de l'atelier :
+
 Le script Python de ce répertoire montre un exemple complet de programme pour répondre à la tâche en utilisant la librairie Keras. Je pense que le réseau implémenté est celui-ci :
 ![alt text](https://github.com/ArnaudFerre/AtelierDeepLearningILES/blob/master/workshops/workshop_01/Task_01/pictures/DL01.png)
 
